@@ -115,7 +115,7 @@ async def yt_dlp_download(link: str, type: str, format_id: str = None, title: st
             "no_warnings": True,
             "cookiefile": cookies_file,
             "noplaylist": True,
-            "concurrent_fragment_downloads": 5,
+            "concurrent_fragment_downloads": 10,
         }
         return await loop.run_in_executor(None, _download_ytdlp, link, opts)
 
@@ -127,7 +127,7 @@ async def yt_dlp_download(link: str, type: str, format_id: str = None, title: st
             "no_warnings": True,
             "cookiefile": cookies_file,
             "noplaylist": True,
-            "concurrent_fragment_downloads": 5,
+            "concurrent_fragment_downloads": 10,
         }
         return await loop.run_in_executor(None, _download_ytdlp, link, opts)
 
@@ -141,6 +141,7 @@ async def yt_dlp_download(link: str, type: str, format_id: str = None, title: st
             "prefer_ffmpeg": True,
             "merge_output_format": "mp4",
             "cookiefile": cookies_file,
+            "concurrent_fragment_downloads": 10,
         }
         await loop.run_in_executor(None, lambda: YoutubeDL(opts).download([link]))
         return f"{download_folder}/{safe_title}.mp4"
@@ -154,6 +155,7 @@ async def yt_dlp_download(link: str, type: str, format_id: str = None, title: st
             "no_warnings": True,
             "prefer_ffmpeg": True,
             "cookiefile": cookies_file,
+            "concurrent_fragment_downloads": 10,
             "postprocessors": [{
                 "key": "FFmpegExtractAudio",
                 "preferredcodec": "mp3",

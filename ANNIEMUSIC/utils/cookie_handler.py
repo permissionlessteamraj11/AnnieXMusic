@@ -29,7 +29,7 @@ async def fetch_and_store_cookies():
     Fetch cookies from Batbin or Pastebin, clean-write to cookies.txt.
     """
     if not COOKIE_URL:
-        raise EnvironmentError("⚠️ ᴄᴏᴏᴋɪᴇ_ᴜʀʟ ɴᴏᴛ sᴇᴛ ɪɴ ᴇɴᴠ.")
+        return
 
     raw_url = resolve_raw_cookie_url(COOKIE_URL)
 
