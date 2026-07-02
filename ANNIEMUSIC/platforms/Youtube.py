@@ -83,7 +83,7 @@ class YouTubeAPI:
     async def is_live(self, link: str) -> bool:
         prepared = self._prepare_link(link)
         proc = await asyncio.create_subprocess_exec(
-            "yt-dlp", "--cookies", cookies_file, "--dump-json", prepared,
+            "yt-dlp", "--cookies", cookies_file, "--dump-json", "--no-playlist", prepared,
             stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
         )
         stdout, _ = await proc.communicate()
@@ -130,7 +130,7 @@ class YouTubeAPI:
     async def video(self, link: str, videoid: Union[str, bool, None] = None) -> Tuple[int, str]:
         link = self._prepare_link(link, videoid)
         proc = await asyncio.create_subprocess_exec(
-            "yt-dlp", "--cookies", cookies_file, "-g", "-f", "best[height<=?720][width<=?1280]",
+            "yt-dlp", "--cookies", cookies_file, "-g", "-f", "best[height<=?720][width<=?1280]", "--no-playlist",
             link, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
         )
         stdout, stderr = await proc.communicate()
@@ -157,7 +157,7 @@ class YouTubeAPI:
         except Exception:
             prepared = self._prepare_link(link, videoid)
             proc = await asyncio.create_subprocess_exec(
-                "yt-dlp", "--cookies", cookies_file, "--dump-json", prepared,
+                "yt-dlp", "--cookies", cookies_file, "--dump-json", "--no-playlist", prepared,
                 stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
             )
             stdout, _ = await proc.communicate()
@@ -256,6 +256,7 @@ class YouTubeAPI:
                     "-g",
                     "-f",
                     "best[height<=?720][width<=?1280]",
+                    "--no-playlist",
                     link,
                     stdout=asyncio.subprocess.PIPE,
                     stderr=asyncio.subprocess.PIPE,
